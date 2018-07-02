@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://models/Planets/Planets.gd" type="Script" id=1]
+[ext_resource path="res://spritesheet.png" type="Texture" id=2]
+
+[node name="Sprite" type="Node2D" index="0"]
+
+z_index = 1
+z_as_relative = false
+script = ExtResource( 1 )
+_sections_unfolded = [ "Animation", "Offset", "Region", "Transform", "Z Index" ]
+
+[node name="Sprite" type="Sprite" parent="." index="0"]
+
+visible = false
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 1280, 10, 200, 200 )
+_sections_unfolded = [ "Region" ]
+
+[node name="Sprite2" type="Sprite" parent="." index="1"]
+
+visible = false
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 1490, 40, 140, 150 )
+_sections_unfolded = [ "Region" ]
+
+[node name="Sprite3" type="Sprite" parent="." index="2"]
+
+visible = false
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 1630, 20, 180, 160 )
+_sections_unfolded = [ "Region" ]
+
+
