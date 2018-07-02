@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://characters/Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://models/BulletSpawn/Bullet_Spawner.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://spritesheet.png" type="Texture" id=4]
 [ext_resource path="res://characters/Player/Idle.gd" type="Script" id=5]
 [ext_resource path="res://characters/Player/Move.gd" type="Script" id=6]
+[ext_resource path="res://characters/Player/Dead.gd" type="Script" id=7]
 
 [sub_resource type="CapsuleShape2D" id=1]
 
@@ -15,11 +16,13 @@ height = 4.76135
 
 [node name="Player" type="KinematicBody2D" index="0"]
 
+pause_mode = 2
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
 collision/safe_margin = 0.08
 script = ExtResource( 1 )
+_sections_unfolded = [ "Pause" ]
 
 [node name="Bullet_Spawner" parent="." index="0" instance=ExtResource( 2 )]
 
@@ -40,7 +43,27 @@ _sections_unfolded = [ "Region", "Transform" ]
 position = Vector2( 0.115982, 4.75528 )
 shape = SubResource( 1 )
 
-[node name="State" type="Node" parent="." index="3"]
+[node name="Area2D" type="Area2D" parent="." index="3"]
+
+editor/display_folded = true
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+collision_layer = 2
+collision_mask = 2
+audio_bus_override = false
+audio_bus_name = "Master"
+_sections_unfolded = [ "Collision" ]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D" index="0"]
+
+modulate = Color( 0, 1, 0.015625, 1 )
+position = Vector2( 0.115982, 4.75528 )
+shape = SubResource( 1 )
+
+[node name="State" type="Node" parent="." index="4"]
 
 editor/display_folded = true
 
@@ -54,5 +77,17 @@ script = ExtResource( 6 )
 speed = 250
 
 [node name="Dead" type="Node" parent="State" index="2"]
+
+script = ExtResource( 7 )
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="." index="5"]
+
+position = Vector2( 0, 7.5 )
+scale = Vector2( 1, 1.25 )
+rect = Rect2( -10, -10, 20, 20 )
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
+
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="State/Dead" method="_on_VisibilityNotifier2D_screen_exited"]
 
 

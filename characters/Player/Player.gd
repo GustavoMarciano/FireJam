@@ -28,3 +28,9 @@ func _change_state(state):
 	else:
 		print("invalid state")
 	pass
+
+func _on_Area2D_area_entered(area):
+	if  current_state != $"State/Dead":
+		_change_state("Dead")
+		get_tree().paused = true
+	pass 

@@ -48,11 +48,12 @@ tracks/2/keys = {
 
 [node name="Explosion" type="Node2D" index="0"]
 
+pause_mode = 2
 scale = Vector2( 0.3, 0.3 )
 z_index = 1000
 z_as_relative = false
 script = ExtResource( 1 )
-_sections_unfolded = [ "Animation", "Offset", "Transform", "Z Index" ]
+_sections_unfolded = [ "Animation", "Offset", "Pause", "Transform", "Z Index" ]
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 

@@ -11,4 +11,4 @@ func _on_Area2D_area_entered(area):
 	get_parent().add_child(new_obj)
 	new_obj.position = position
 	queue_free()
-	pass # replace with function body
+	pass 
