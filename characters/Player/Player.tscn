@@ -14,7 +14,9 @@ custom_solver_bias = 0.0
 radius = 10.0
 height = 4.76135
 
-[node name="Player" type="KinematicBody2D" index="0"]
+[node name="Player" type="KinematicBody2D" index="0" groups=[
+"Player",
+]]
 
 pause_mode = 2
 input_pickable = false
@@ -28,6 +30,7 @@ _sections_unfolded = [ "Pause" ]
 
 WaitTime = 0.25
 Object_Path = ExtResource( 3 )
+dmg = 10
 
 [node name="Sprite" type="Sprite" parent="." index="1"]
 
@@ -64,8 +67,6 @@ position = Vector2( 0.115982, 4.75528 )
 shape = SubResource( 1 )
 
 [node name="State" type="Node" parent="." index="4"]
-
-editor/display_folded = true
 
 [node name="Idle" type="Node" parent="State" index="0"]
 

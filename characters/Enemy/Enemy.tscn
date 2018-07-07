@@ -1,17 +1,74 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://characters/Enemy/Enemy.gd" type="Script" id=1]
-[ext_resource path="res://spritesheet.png" type="Texture" id=2]
-[ext_resource path="res://characters/Enemy/EnemyIdle.gd" type="Script" id=3]
-[ext_resource path="res://characters/Enemy/EnemyMove.gd" type="Script" id=4]
+[ext_resource path="res://characters/Hp.tscn" type="PackedScene" id=2]
+[ext_resource path="res://spritesheet.png" type="Texture" id=3]
+[ext_resource path="res://characters/Enemy/EnemyIdle.gd" type="Script" id=4]
+[ext_resource path="res://characters/Enemy/EnemyMove.gd" type="Script" id=5]
+[ext_resource path="res://characters/Enemy/Dead.gd" type="Script" id=6]
+[ext_resource path="res://characters/Enemy/Stagger.gd" type="Script" id=7]
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="Animation" id=1]
+
+resource_name = "Idle"
+length = 0.5
+loop = true
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1.8137 ]
+}
+
+[sub_resource type="Animation" id=2]
+
+resource_name = "stagger"
+length = 0.4
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -26.632, 39.9513 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 0.03125, 0.03125, 1 ), Color( 0.890625, 0.814087, 0.814087, 1 ) ]
+}
+
+[sub_resource type="RectangleShape2D" id=3]
 
 custom_solver_bias = 0.0
 extents = Vector2( 31.9387, 28.9984 )
 
-[node name="Enemy" type="KinematicBody2D" index="0"]
+[node name="Enemy" type="KinematicBody2D" index="0" groups=[
+"Enemy",
+]]
 
+modulate = Color( 0.890625, 0.814087, 0.814087, 1 )
+rotation = 0.697282
 z_index = 100
 z_as_relative = false
 input_pickable = false
@@ -19,19 +76,39 @@ collision_layer = 1
 collision_mask = 1
 collision/safe_margin = 0.08
 script = ExtResource( 1 )
-_sections_unfolded = [ "Transform", "Z Index" ]
+_sections_unfolded = [ "Visibility" ]
 
-[node name="Sprite" type="Sprite" parent="." index="0"]
+[node name="Hp" parent="." index="0" instance=ExtResource( 2 )]
+
+hp = 20
+total_hp = 20
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
+
+root_node = NodePath("..")
+autoplay = ""
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+playback_speed = 1.0
+anims/Idle = SubResource( 1 )
+anims/stagger = SubResource( 2 )
+blend_times = [  ]
+_sections_unfolded = [ "Playback Options" ]
+
+[node name="Sprite" type="Sprite" parent="." index="2"]
 
 position = Vector2( 1.7159, -1.61137 )
 scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 region_enabled = true
 region_rect = Rect2( 1061.22, -1, 216, 213.127 )
-_sections_unfolded = [ "Region", "Transform" ]
+_sections_unfolded = [ "Animation", "Region", "Transform" ]
 
-[node name="Area2D" type="Area2D" parent="." index="1"]
+[node name="Area2D" type="Area2D" parent="." index="3"]
 
+editor/display_folded = true
+visible = false
+position = Vector2( -0.35849, 0.35849 )
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
@@ -47,23 +124,31 @@ _sections_unfolded = [ "Collision", "Transform" ]
 
 position = Vector2( 1.43358, -1.30569 )
 rotation = 0.698132
-shape = SubResource( 1 )
+shape = SubResource( 3 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="State" type="Node" parent="." index="2"]
+[node name="State" type="Node" parent="." index="4"]
 
 editor/display_folded = true
 
 [node name="Idle" type="Node" parent="State" index="0"]
 
-script = ExtResource( 3 )
+script = ExtResource( 4 )
 
 [node name="Move" type="Node" parent="State" index="1"]
 
-script = ExtResource( 4 )
+script = ExtResource( 5 )
 maxspeed = 600
 minspeed = 200
 
 [node name="Dead" type="Node" parent="State" index="2"]
+
+script = ExtResource( 6 )
+
+[node name="Stagger" type="Node" parent="State" index="3"]
+
+script = ExtResource( 7 )
+
+[connection signal="animation_finished" from="AnimationPlayer" to="State/Stagger" method="_on_AnimationPlayer_animation_finished"]
 
 

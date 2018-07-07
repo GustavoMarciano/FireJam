@@ -1,7 +1,6 @@
 extends "res://characters/Default.gd"
 
 var current_state = ""
-var obj = load("res://models/PlayerBullet/PlayerBullet.tscn")
 
 func _ready():
 	_change_state("Idle")
@@ -9,7 +8,6 @@ func _ready():
 func _physics_process(delta):
 	control()
 	current_state.update(delta)
-	pass
 
 func control():  
 	var move = Vector2(int(Input.is_action_pressed("ui_right")) - int(Input.is_action_pressed("ui_left")),int(Input.is_action_pressed("ui_down")) - int(Input.is_action_pressed("ui_up")))
@@ -17,8 +15,6 @@ func control():
 	var shoot = Input.is_action_pressed("ui_shoot")
 	if shoot:
 		$"Bullet_Spawner".shoot()
-	pass
-
 
 func _change_state(state):
 	var path = "State/" + state
@@ -27,10 +23,8 @@ func _change_state(state):
 		current_state.start()
 	else:
 		print("invalid state")
-	pass
 
 func _on_Area2D_area_entered(area):
-	if  current_state != $"State/Dead":
+	if area.owner.is_in_group("Enemy"): 
 		_change_state("Dead")
-		get_tree().paused = true
-	pass 
+	pass

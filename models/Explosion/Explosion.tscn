@@ -45,6 +45,30 @@ tracks/2/keys = {
 "update": 1,
 "values": [ 0, 1 ]
 }
+tracks/3/type = "value"
+tracks/3/path = NodePath(".:region_enabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, true ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath(".:region_rect")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ Rect2( 386, 0, 334, 294 ), Rect2( -2, 0, 330, 290 ) ]
+}
 
 [node name="Explosion" type="Node2D" index="0"]
 
@@ -58,9 +82,9 @@ _sections_unfolded = [ "Animation", "Offset", "Pause", "Transform", "Z Index" ]
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
 texture = ExtResource( 2 )
-hframes = 2
-frame = 1
-_sections_unfolded = [ "Animation" ]
+region_enabled = true
+region_rect = Rect2( 386, 0, 334, 294 )
+_sections_unfolded = [ "Animation", "Region" ]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite" index="0"]
 
