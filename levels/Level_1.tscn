@@ -1,12 +1,12 @@
 [gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://characters/Player/Player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://models/Spawn/Spawn.tscn" type="PackedScene" id=2]
-[ext_resource path="res://characters/Enemy/Enemy.tscn" type="PackedScene" id=3]
-[ext_resource path="res://models/Planets/Planets.tscn" type="PackedScene" id=4]
-[ext_resource path="res://models/Wall/Wall.tscn" type="PackedScene" id=5]
-[ext_resource path="res://models/Camera/Camera2D.gd" type="Script" id=6]
-[ext_resource path="res://levels/Label.gd" type="Script" id=7]
+[ext_resource path="res://interface/CanvasLayer.tscn" type="PackedScene" id=1]
+[ext_resource path="res://characters/Player/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://models/Spawn/Spawn.tscn" type="PackedScene" id=3]
+[ext_resource path="res://characters/Enemy/Enemy.tscn" type="PackedScene" id=4]
+[ext_resource path="res://models/Planets/Planets.tscn" type="PackedScene" id=5]
+[ext_resource path="res://models/Wall/Wall.tscn" type="PackedScene" id=6]
+[ext_resource path="res://models/Camera/Camera2D.gd" type="Script" id=7]
 
 [sub_resource type="Animation" id=1]
 
@@ -24,7 +24,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 660, -160 ), Vector2( 651.992, 206.044 ) ]
+"values": [ Vector2( 1431.76, 127.713 ), Vector2( 1435.77, 532.395 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath(".:rotation_degrees")
@@ -54,7 +54,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 660, -160 ), Vector2( 651.992, 206.044 ) ]
+"values": [ Vector2( 1429.86, 106.359 ), Vector2( 1447.87, 531.63 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath(".:rotation_degrees")
@@ -69,25 +69,28 @@ tracks/1/keys = {
 "values": [ 0.0, 0.0 ]
 }
 
-[node name="Level_1" type="Node" index="0"]
+[node name="Level_1" type="Node"]
 
-[node name="Player" parent="." index="0" instance=ExtResource( 1 )]
+[node name="CanvasLayer" parent="." index="0" instance=ExtResource( 1 )]
 
-position = Vector2( -575.944, -7.98807 )
+editor/display_folded = true
+
+[node name="Player" parent="." index="1" instance=ExtResource( 2 )]
+
+position = Vector2( 78.1822, 324.201 )
 rotation = 0.0148904
 z_index = 1000
 z_as_relative = false
 
-[node name="Enemy" parent="." index="1" instance=ExtResource( 2 )]
+[node name="Enemy" parent="." index="2" instance=ExtResource( 3 )]
 
-editor/display_folded = true
-position = Vector2( 660, -160 )
+position = Vector2( 1431.76, 127.713 )
 z_index = 100
 z_as_relative = false
 _sections_unfolded = [ "Z Index" ]
 min_waitTime = 0.0
 max_waitTime = 1.0
-Object_Path = ExtResource( 3 )
+Object_Path = ExtResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Enemy" index="0"]
 
@@ -100,16 +103,15 @@ anims/movement = SubResource( 1 )
 blend_times = [  ]
 _sections_unfolded = [ "Playback Options" ]
 
-[node name="Planets" parent="." index="2" instance=ExtResource( 2 )]
+[node name="Planets" parent="." index="3" instance=ExtResource( 3 )]
 
-editor/display_folded = true
-position = Vector2( 660, -160 )
+position = Vector2( 1429.86, 106.359 )
 z_index = -1000
 z_as_relative = false
 _sections_unfolded = [ "Z Index" ]
 min_waitTime = 4.0
 max_waitTime = 6.0
-Object_Path = ExtResource( 4 )
+Object_Path = ExtResource( 5 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Planets" index="0"]
 
@@ -122,40 +124,40 @@ anims/movement = SubResource( 2 )
 blend_times = [  ]
 _sections_unfolded = [ "Playback Options" ]
 
-[node name="Walls" type="Node" parent="." index="3"]
+[node name="Walls" type="Node" parent="." index="4"]
 
 editor/display_folded = true
 
-[node name="Wall4" parent="Walls" index="0" instance=ExtResource( 5 )]
+[node name="Wall4" parent="Walls" index="0" instance=ExtResource( 6 )]
 
-position = Vector2( -616.991, -76.3985 )
+position = Vector2( 24.8317, 169.668 )
 rotation = 1.5708
 scale = Vector2( 78, 1 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Wall3" parent="Walls" index="1" instance=ExtResource( 5 )]
+[node name="Wall3" parent="Walls" index="1" instance=ExtResource( 6 )]
 
-position = Vector2( 161.374, -99.5578 )
+position = Vector2( 725.076, -85.204 )
 rotation = 1.5708
 scale = Vector2( 78, 1 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Wall2" parent="Walls" index="2" instance=ExtResource( 5 )]
+[node name="Wall2" parent="Walls" index="2" instance=ExtResource( 6 )]
 
-position = Vector2( -35.1958, -194.522 )
-rotation = -2.91505e-15
+position = Vector2( 603.169, 81.3995 )
+rotation = -2.91505e-015
 scale = Vector2( 78, 1 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Wall" parent="Walls" index="3" instance=ExtResource( 5 )]
+[node name="Wall" parent="Walls" index="3" instance=ExtResource( 6 )]
 
-position = Vector2( -47.1369, 290.513 )
+position = Vector2( 619.293, 563.236 )
 scale = Vector2( 78, 1 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Camera2D" type="Camera2D" parent="." index="4"]
+[node name="Camera2D" type="Camera2D" parent="." index="5"]
 
-anchor_mode = 1
+anchor_mode = 0
 rotating = false
 current = true
 zoom = Vector2( 1, 1 )
@@ -177,30 +179,8 @@ drag_margin_bottom = 0.2
 editor_draw_screen = true
 editor_draw_limits = false
 editor_draw_drag_margin = false
-script = ExtResource( 6 )
+script = ExtResource( 7 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Label" type="Label" parent="." index="5"]
 
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = -30.0
-margin_top = -260.0
-margin_right = 70.0
-margin_bottom = -246.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
-text = "Score:"
-uppercase = true
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-script = ExtResource( 7 )
-
-
+[editable path="CanvasLayer"]

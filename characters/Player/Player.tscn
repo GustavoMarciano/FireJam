@@ -14,11 +14,10 @@ custom_solver_bias = 0.0
 radius = 10.0
 height = 4.76135
 
-[node name="Player" type="KinematicBody2D" index="0" groups=[
+[node name="Player" type="KinematicBody2D" groups=[
 "Player",
 ]]
 
-pause_mode = 2
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
@@ -28,7 +27,7 @@ _sections_unfolded = [ "Pause" ]
 
 [node name="Bullet_Spawner" parent="." index="0" instance=ExtResource( 2 )]
 
-WaitTime = 0.25
+WaitTime = 0.4
 Object_Path = ExtResource( 3 )
 dmg = 10
 

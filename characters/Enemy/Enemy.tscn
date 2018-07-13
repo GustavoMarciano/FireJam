@@ -1,17 +1,19 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://characters/Enemy/Enemy.gd" type="Script" id=1]
-[ext_resource path="res://characters/Hp.tscn" type="PackedScene" id=2]
-[ext_resource path="res://spritesheet.png" type="Texture" id=3]
-[ext_resource path="res://characters/Enemy/EnemyIdle.gd" type="Script" id=4]
-[ext_resource path="res://characters/Enemy/EnemyMove.gd" type="Script" id=5]
-[ext_resource path="res://characters/Enemy/Dead.gd" type="Script" id=6]
-[ext_resource path="res://characters/Enemy/Stagger.gd" type="Script" id=7]
+[ext_resource path="res://models/BulletSpawn/Bullet_Spawner.tscn" type="PackedScene" id=2]
+[ext_resource path="res://models/EnemyBullet/EnemyBullet.tscn" type="PackedScene" id=3]
+[ext_resource path="res://characters/Hp.tscn" type="PackedScene" id=4]
+[ext_resource path="res://spritesheet.png" type="Texture" id=5]
+[ext_resource path="res://characters/Enemy/EnemyIdle.gd" type="Script" id=6]
+[ext_resource path="res://characters/Enemy/EnemyMove.gd" type="Script" id=7]
+[ext_resource path="res://characters/Enemy/Dead.gd" type="Script" id=8]
+[ext_resource path="res://characters/Enemy/Stagger.gd" type="Script" id=9]
 
 [sub_resource type="Animation" id=1]
 
 resource_name = "Idle"
-length = 0.5
+length = 0.01
 loop = true
 step = 0.1
 tracks/0/type = "value"
@@ -30,7 +32,7 @@ tracks/0/keys = {
 [sub_resource type="Animation" id=2]
 
 resource_name = "stagger"
-length = 0.4
+length = 0.2
 loop = false
 step = 0.1
 tracks/0/type = "value"
@@ -40,7 +42,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4 ),
+"times": PoolRealArray( 0, 0.1, 0.2 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ 0.0, -26.632, 39.9513 ]
@@ -52,7 +54,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4 ),
+"times": PoolRealArray( 0, 0.1, 0.2 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 0.03125, 0.03125, 1 ), Color( 0.890625, 0.814087, 0.814087, 1 ) ]
@@ -68,7 +70,7 @@ extents = Vector2( 31.9387, 28.9984 )
 ]]
 
 modulate = Color( 0.890625, 0.814087, 0.814087, 1 )
-rotation = 0.697282
+rotation = 0.031655
 z_index = 100
 z_as_relative = false
 input_pickable = false
@@ -78,12 +80,19 @@ collision/safe_margin = 0.08
 script = ExtResource( 1 )
 _sections_unfolded = [ "Visibility" ]
 
-[node name="Hp" parent="." index="0" instance=ExtResource( 2 )]
+[node name="Bullet_Spawner" parent="." index="0" instance=ExtResource( 2 )]
+
+position = Vector2( 0.138451, -1.74865 )
+WaitTime = 0.25
+Object_Path = ExtResource( 3 )
+dmg = 1
+
+[node name="Hp" parent="." index="1" instance=ExtResource( 4 )]
 
 hp = 20
 total_hp = 20
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="2"]
 
 root_node = NodePath("..")
 autoplay = ""
@@ -95,16 +104,16 @@ anims/stagger = SubResource( 2 )
 blend_times = [  ]
 _sections_unfolded = [ "Playback Options" ]
 
-[node name="Sprite" type="Sprite" parent="." index="2"]
+[node name="Sprite" type="Sprite" parent="." index="3"]
 
 position = Vector2( 1.7159, -1.61137 )
 scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 3 )
+texture = ExtResource( 5 )
 region_enabled = true
 region_rect = Rect2( 1061.22, -1, 216, 213.127 )
 _sections_unfolded = [ "Animation", "Region", "Transform" ]
 
-[node name="Area2D" type="Area2D" parent="." index="3"]
+[node name="Area2D" type="Area2D" parent="." index="4"]
 
 editor/display_folded = true
 visible = false
@@ -127,28 +136,34 @@ rotation = 0.698132
 shape = SubResource( 3 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="State" type="Node" parent="." index="4"]
+[node name="State" type="Node" parent="." index="5"]
 
 editor/display_folded = true
 
 [node name="Idle" type="Node" parent="State" index="0"]
 
-script = ExtResource( 4 )
+script = ExtResource( 6 )
 
 [node name="Move" type="Node" parent="State" index="1"]
 
-script = ExtResource( 5 )
-maxspeed = 600
-minspeed = 200
+script = ExtResource( 7 )
+maxspeed = 1000
+minspeed = 500
 
 [node name="Dead" type="Node" parent="State" index="2"]
 
-script = ExtResource( 6 )
+script = ExtResource( 8 )
 
 [node name="Stagger" type="Node" parent="State" index="3"]
 
-script = ExtResource( 7 )
+script = ExtResource( 9 )
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="." index="6"]
+
+rect = Rect2( -10, -10, 20, 20 )
 
 [connection signal="animation_finished" from="AnimationPlayer" to="State/Stagger" method="_on_AnimationPlayer_animation_finished"]
+
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
 
 

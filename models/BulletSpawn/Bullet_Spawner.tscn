@@ -2,7 +2,7 @@
 
 [ext_resource path="res://models/BulletSpawn/Bullet_Spawner.gd" type="Script" id=1]
 
-[node name="Bullet_Spawner" type="Position2D" index="0"]
+[node name="Bullet_Spawner" type="Position2D"]
 
 script = ExtResource( 1 )
 WaitTime = null

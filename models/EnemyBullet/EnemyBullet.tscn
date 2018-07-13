@@ -1,18 +1,18 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://models/PlayerBullet/PlayerBullet.gd" type="Script" id=1]
+[ext_resource path="res://models/EnemyBullet/EnemyBullet.gd" type="Script" id=1]
 [ext_resource path="res://spritesheet.png" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
-extents = Vector2( 20, 8.11675 )
+extents = Vector2( 20, 5.41042 )
 
-[node name="Bullet" type="KinematicBody2D" index="0" groups=[
-"Player",
+[node name="Bullet" type="KinematicBody2D" groups=[
+"Enemy",
 ]]
 
-position = Vector2( 4, 4 )
+position = Vector2( -1.00232, -2.48497 )
 scale = Vector2( 1.125, 1.125 )
 z_index = 1000
 z_as_relative = false
@@ -25,16 +25,18 @@ _sections_unfolded = [ "Transform", "Z Index" ]
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
-position = Vector2( 23.1111, 5.33333 )
+modulate = Color( 1, 0.0390625, 0.0390625, 1 )
 scale = Vector2( 0.753561, 0.311448 )
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( -8, 134.18, 78, 66 )
-_sections_unfolded = [ "Region", "Transform" ]
+_sections_unfolded = [ "Region", "Transform", "Visibility" ]
 
 [node name="Area2D" type="Area2D" parent="." index="1"]
 
-position = Vector2( -3.55556, 14.2222 )
+editor/display_folded = true
+position = Vector2( 18.6033, -10.5701 )
+scale = Vector2( -1, 1 )
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
 gravity = 98.0
@@ -44,30 +46,22 @@ collision_layer = 2
 collision_mask = 2
 audio_bus_override = false
 audio_bus_name = "Master"
-_sections_unfolded = [ "Collision" ]
+_sections_unfolded = [ "Collision", "Transform", "Z Index" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="0"]
 
-position = Vector2( 26.6667, -8.88889 )
+position = Vector2( 18.1805, 10.5701 )
 scale = Vector2( 1, 0.84188 )
 shape = SubResource( 1 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="." index="2"]
 
+position = Vector2( 0, -0.824761 )
 rect = Rect2( -10, -10, 20, 20 )
-
-[node name="Timer" type="Timer" parent="." index="3"]
-
-process_mode = 1
-wait_time = 1.0
-one_shot = true
-autostart = true
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
 
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
-
-[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 
 

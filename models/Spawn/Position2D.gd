@@ -11,9 +11,7 @@ func _ready():
 	$"Timer".start()
 
 func _on_Timer_timeout():
-	var new_obj = obj.instance()
-	get_parent().add_child(new_obj)
-	new_obj.position = global_position
+	utils.create_object(obj,global_position,self)
 	$"Timer".set_wait_time(rand_range(min_waitTime,max_waitTime))
 	$"Timer".start()
 	pass 

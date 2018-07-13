@@ -12,6 +12,8 @@ func _physics_process(delta):
 
 	if $"Hp".hp == 0 && current_state != get_node("State/Dead"):
 		_change_state("Dead")
+		
+	$"Bullet_Spawner".shoot()
 
 func _change_state(state):
 	var path = "State/" + state
@@ -20,4 +22,7 @@ func _change_state(state):
 		current_state.start()
 	else:
 		print("invalid state")
-	pass
+
+func _on_VisibilityNotifier2D_screen_exited():
+	queue_free()
+	pass # replace with function body
